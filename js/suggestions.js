@@ -290,6 +290,7 @@ async function loadSuggestions() {
         // Generate AI suggestions first
         showToast('🤖 Analyzing your data...', 'info');
         aiSuggestions = await generateAISuggestions(latest);
+        const aiCount = aiSuggestions.length;
         
         // Generate rule-based suggestions
         const ruleSuggestions = SUGGESTIONS_DB.filter(sug => {
@@ -303,7 +304,6 @@ async function loadSuggestions() {
         const header = document.getElementById('sugHeader');
         if (header) {
             const total = latest.total_co2 || 0;
-            const aiCount = aiSuggestions.length;
             header.innerHTML = `
         <div class="sug-header-inner">
           <div>
