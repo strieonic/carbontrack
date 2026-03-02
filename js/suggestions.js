@@ -231,8 +231,12 @@ async function loadSuggestions() {
         }
 
         // Generate AI suggestions first
-        showToast('🤖 Generating AI-powered suggestions...', 'info');
-        aiSuggestions = await generateAISuggestions(latest);
+        if (window.puter) {
+            showToast('🤖 Generating AI-powered suggestions...', 'info');
+            aiSuggestions = await generateAISuggestions(latest);
+        } else {
+            console.warn('Puter.js not loaded, skipping AI suggestions');
+        }
         
         // Generate rule-based suggestions
         const ruleSuggestions = SUGGESTIONS_DB.filter(sug => {
