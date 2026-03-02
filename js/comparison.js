@@ -25,7 +25,16 @@ async function loadComparison() {
             return;
         }
 
-        if (content) content.classList.remove('hidden');
+        // Hide no data state and show content
+        if (noData) {
+            noData.classList.add('hidden');
+            noData.style.display = 'none';
+        }
+        if (content) {
+            content.classList.remove('hidden');
+            content.style.display = 'block';
+        }
+
         renderBanner(current, previous);
         renderKPIColumns(current, previous);
         renderCategoryRows(current, previous);

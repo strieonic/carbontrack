@@ -34,7 +34,16 @@ async function loadDashboard() {
             return;
         }
 
-        if (content) content.classList.remove('hidden');
+        // Hide empty state and show content
+        if (empty) {
+            empty.classList.add('hidden');
+            empty.style.display = 'none';
+        }
+        if (content) {
+            content.classList.remove('hidden');
+            content.style.display = 'block';
+        }
+        
         chartDefaults();
 
         renderKPIs(latest, lastTwo);

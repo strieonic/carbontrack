@@ -141,7 +141,15 @@ async function loadSuggestions() {
             return;
         }
 
-        if (content) content.classList.remove('hidden');
+        // Hide no data state and show content
+        if (noData) {
+            noData.classList.add('hidden');
+            noData.style.display = 'none';
+        }
+        if (content) {
+            content.classList.remove('hidden');
+            content.style.display = 'block';
+        }
 
         // Generate applicable suggestions
         allSuggestions = SUGGESTIONS_DB.filter(sug => {
