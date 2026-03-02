@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonTrack - Page Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #0a0e1a;
+            color: #e0e0e0;
+        }
+        h1 {
+            color: #48c78e;
+            border-bottom: 2px solid #48c78e;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            background: #1a1f2e;
+            border: 1px solid #2a3f4e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-link {
+            display: block;
+            padding: 12px 20px;
+            margin: 10px 0;
+            background: #48c78e;
+            color: #0a0e1a;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .test-link:hover {
+            background: #3dd9b3;
+            transform: translateX(5px);
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .status.fixed {
+            background: #48c78e;
+            color: #0a0e1a;
+        }
+        .status.warning {
+            background: #f59e0b;
+            color: #0a0e1a;
+        }
+        ul {
+            line-height: 1.8;
+        }
+        code {
+            background: #2a3f4e;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌿 CarbonTrack - Testing Dashboard</h1>
+    
+    <div class="test-section">
+        <h2>✅ Issues Fixed</h2>
+        <ul>
+            <li><strong>Duplicate HTML in index.html</strong> <span class="status fixed">FIXED</span><br>
+                Removed 5 duplicate HTML documents that were concatenated in the file</li>
+            <li><strong>Invalid Supabase Key</strong> <span class="status warning">ACTION NEEDED</span><br>
+                Updated format, but you need to add your actual key from Supabase dashboard</li>
+            <li><strong>Page Separation</strong> <span class="status fixed">FIXED</span><br>
+                All pages are now properly separated and working independently</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Test All Pages</h2>
+        <p>Click each link below to test the pages. All should load without errors:</p>
+        
+        <a href="index.html" class="test-link" target="_blank">🏠 Home Page</a>
+        <a href="pages/survey.html" class="test-link" target="_blank">📋 Survey Page</a>
+        <a href="pages/dashboard.html" class="test-link" target="_blank">📊 Dashboard Page</a>
+        <a href="pages/comparison.html" class="test-link" target="_blank">🔄 Comparison Page</a>
+        <a href="pages/suggestions.html" class="test-link" target="_blank">🤖 AI Suggestions Page</a>
+        <a href="pages/impact.html" class="test-link" target="_blank">🌍 Impact Page</a>
+    </div>
+
+    <div class="test-section">
+        <h2>⚠️ Action Required</h2>
+        <ol>
+            <li>Get your Supabase anon key:
+                <ul>
+                    <li>Go to <a href="https://supabase.com/dashboard/project/truoxyqyzuygobiendjy/settings/api" target="_blank" style="color: #48c78e;">Supabase API Settings</a></li>
+                    <li>Copy the "anon" public key (starts with <code>eyJ...</code>)</li>
+                </ul>
+            </li>
+            <li>Update <code>js/supabase.js</code>:
+                <ul>
+                    <li>Replace the <code>SUPABASE_KEY</code> value with your actual key</li>
+                </ul>
+            </li>
+            <li>Create the database table:
+                <ul>
+                    <li>Run the SQL from <code>README.md</code> in Supabase SQL editor</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 Testing Checklist</h2>
+        <ul>
+            <li>✅ Server running on http://localhost:8000</li>
+            <li>✅ Home page loads with animations</li>
+            <li>✅ Navigation menu works</li>
+            <li>✅ Survey form has 6 steps</li>
+            <li>✅ All pages are accessible</li>
+            <li>⏳ Database connection (needs Supabase key)</li>
+            <li>⏳ Data persistence (needs database setup)</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>🚀 Next Steps</h2>
+        <ol>
+            <li>Update Supabase key in <code>js/supabase.js</code></li>
+            <li>Create database table using SQL from README</li>
+            <li>Test the complete flow:
+                <ul>
+                    <li>Fill out survey</li>
+                    <li>Submit data</li>
+                    <li>View dashboard</li>
+                    <li>Check comparison (after 2nd survey)</li>
+                    <li>Review AI suggestions</li>
+                    <li>See impact visualization</li>
+                </ul>
+            </li>
+            <li>Deploy to Vercel (optional)</li>
+        </ol>
+    </div>
+
+    <div class="test-section" style="background: #1a2e1a; border-color: #48c78e;">
+        <h2 style="color: #48c78e;">✨ All Systems Ready!</h2>
+        <p>The application structure is fixed and ready to use. Just add your Supabase key and you're good to go!</p>
+    </div>
+</body>
+</html>

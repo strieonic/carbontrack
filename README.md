@@ -74,7 +74,15 @@ carbontrack/
 
 Your Supabase project: `https://truoxyqyzuygobiendjy.supabase.co`
 
-Run this SQL in the Supabase SQL editor to create the table:
+### Step 1: Get Your Supabase Anon Key
+
+1. Go to https://supabase.com/dashboard/project/truoxyqyzuygobiendjy/settings/api
+2. Copy the "anon" public key (it starts with `eyJ...`)
+3. Open `js/supabase.js` and replace the `SUPABASE_KEY` value with your actual key
+
+### Step 2: Create the Database Table
+
+Run this SQL in the Supabase SQL editor:
 
 ```sql
 CREATE TABLE carbon_entries (
