@@ -240,7 +240,7 @@ window.filterSuggestions = function (filter) {
 function renderSugCard(sug) {
     const isAI = String(sug.id || '').startsWith('ai_');
     return `
-    <div class="sug-card glass-card fade-up" data-impact="${sug.impact}">
+    <div class="sug-card glass-card" data-impact="${sug.impact}">
       <div class="sug-top">
         <div class="sug-icon">${sug.icon}</div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
@@ -326,11 +326,7 @@ async function loadSuggestions() {
         // Render grid
         const grid = document.getElementById('sugGrid');
         if (grid) {
-            console.log('Rendering suggestions:', allSuggestions.length, allSuggestions);
             grid.innerHTML = allSuggestions.map(renderSugCard).join('');
-            console.log('Grid HTML length:', grid.innerHTML.length);
-        } else {
-            console.error('Grid element not found!');
         }
         
         if (aiCount > 0) {

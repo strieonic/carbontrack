@@ -69,6 +69,11 @@ h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
 p { color: var(--clr-text-secondary); line-height: 1.7; }
 a { text-decoration: none; color: inherit; }
 
+/* ===== UTILITY CLASSES ===== */
+.hidden {
+  display: none !important;
+}
+
 /* ===== GLASSMORPHISM CARD ===== */
 .glass-card {
   background: var(--gradient-card);
