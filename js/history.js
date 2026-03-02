@@ -92,9 +92,9 @@ function renderSurveyList(entries) {
                     <button class="btn btn-primary" onclick="viewSurvey('${entry.id}')" style="width:100%;">
                         <img src="../assets/icons/chart.svg" alt="" class="icon" style="margin-right:4px;"> View
                     </button>
-                    ${!isLatest ? `<button class="btn btn-outline" onclick="deleteSurvey('${entry.id}')" style="width:100%;">
+                    <button class="btn btn-outline" onclick="deleteSurvey('${entry.id}')" style="width:100%;">
                         <img src="../assets/icons/trash.svg" alt="" class="icon" style="margin-right:4px;"> Delete
-                    </button>` : ''}
+                    </button>
                 </div>
             </div>
 
@@ -123,6 +123,13 @@ window.deleteSurvey = async function(id) {
         return;
     }
 
+    // Show loading state
+    const deleteBtn = event.target.closest('button');
+    if (deleteBtn) {
+        deleteBtn.disabled = true;
+        deleteBtn.innerHTML = '<div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0 auto;"></div>';
+    }
+
     try {
         const { error } = await supabase
             .from('carbon_entries')
@@ -130,18 +137,27 @@ window.deleteSurvey = async function(id) {
             .eq('id', id)
             .eq('device_id', deviceID);
 
-        if (error) throw error;
+        if (error) {
+            console.error('Delete error:', error);
+            throw error;
+        }
 
         showToast('Survey deleted successfully', 'success');
         
-        // Reload the page
+        // Reload the page after a short delay
         setTimeout(() => {
             window.location.reload();
-        }, 1000);
+        }, 800);
 
     } catch (err) {
-        console.error(err);
-        showToast('Failed to delete survey', 'error');
+        console.error('Delete failed:', err);
+        showToast('Failed to delete survey: ' + (err.message || 'Unknown error'), 'error');
+        
+        // Restore button
+        if (deleteBtn) {
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = '<img src="../assets/icons/trash.svg" alt="" class="icon" style="margin-right:4px;"> Delete';
+        }
     }
 };
 
