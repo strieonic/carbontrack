@@ -1,10 +1,15 @@
 {
   "rewrites": [
     { "source": "/survey", "destination": "/pages/survey.html" },
+    { "source": "/survey.html", "destination": "/pages/survey.html" },
     { "source": "/dashboard", "destination": "/pages/dashboard.html" },
+    { "source": "/dashboard.html", "destination": "/pages/dashboard.html" },
     { "source": "/comparison", "destination": "/pages/comparison.html" },
+    { "source": "/comparison.html", "destination": "/pages/comparison.html" },
     { "source": "/suggestions", "destination": "/pages/suggestions.html" },
-    { "source": "/impact", "destination": "/pages/impact.html" }
+    { "source": "/suggestions.html", "destination": "/pages/suggestions.html" },
+    { "source": "/impact", "destination": "/pages/impact.html" },
+    { "source": "/impact.html", "destination": "/pages/impact.html" }
   ],
   "headers": [
     {
