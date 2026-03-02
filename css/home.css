@@ -616,3 +616,94 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 1024px) {
+    .hero-content {
+        padding: 60px 40px;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .how-it-works-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 70vh;
+    }
+    
+    .hero-content {
+        padding: 40px 20px;
+        text-align: center;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .hero-cta .btn {
+        width: 100%;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature-card {
+        padding: 24px;
+    }
+    
+    .how-it-works-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .step-card {
+        padding: 24px;
+    }
+    
+    .step-num {
+        font-size: 2rem;
+    }
+    
+    .cta-section {
+        padding: 60px 20px;
+    }
+    
+    .cta-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        min-height: 60vh;
+    }
+    
+    .hero-content {
+        padding: 30px 16px;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .feature-card {
+        padding: 20px;
+    }
+    
+    .step-card {
+        padding: 20px;
+    }
+}

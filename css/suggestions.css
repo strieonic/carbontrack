@@ -195,3 +195,100 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/* Enhanced Mobile Styles */
+@media (max-width: 1024px) {
+    .sug-header-inner {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .sug-saving-potential {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .sug-header {
+        padding: 20px;
+    }
+    
+    .sug-header-inner {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .sug-total {
+        font-size: 2rem;
+    }
+    
+    .sug-tabs {
+        gap: 6px;
+        margin-bottom: 20px;
+    }
+    
+    .sug-tab {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+        flex: 1;
+        min-width: fit-content;
+    }
+    
+    .sug-card {
+        padding: 20px;
+    }
+    
+    .sug-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .sug-icon {
+        font-size: 1.8rem;
+    }
+    
+    .sug-card h3 {
+        font-size: 1rem;
+    }
+    
+    .sug-card p {
+        font-size: 0.85rem;
+    }
+    
+    .dash-cta {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .dash-cta .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .sug-header {
+        padding: 16px;
+    }
+    
+    .sug-total {
+        font-size: 1.8rem;
+    }
+    
+    .sug-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .sug-tab {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+    
+    .sug-card {
+        padding: 16px;
+    }
+    
+    .sp-val {
+        font-size: 1.4rem;
+    }
+}
