@@ -63,7 +63,7 @@ function renderSurveyList(entries) {
                     </div>
                     
                     <p style="color:var(--clr-text-secondary);margin-bottom:16px;">
-                        <img src="../assets/icons/calendar.svg" alt="" class="icon icon-sm" style="margin-right:4px;"> ${date} · 
+                        📅 ${date} · 
                         <img src="../assets/icons/home.svg" alt="" class="icon icon-sm" style="margin-left:8px;margin-right:4px;"> ${entry.house_type || 'N/A'} · 
                         <img src="../assets/icons/person.svg" alt="" class="icon icon-sm" style="margin-left:8px;margin-right:4px;"> ${entry.people || 1} people
                     </p>
@@ -92,7 +92,7 @@ function renderSurveyList(entries) {
                     <button class="btn btn-primary" onclick="viewSurvey('${entry.id}')" style="width:100%;">
                         <img src="../assets/icons/chart.svg" alt="" class="icon" style="margin-right:4px;"> View
                     </button>
-                    <button class="btn btn-outline" onclick="deleteSurvey('${entry.id}')" style="width:100%;">
+                    <button class="btn btn-outline" onclick="deleteSurvey('${entry.id}', event)" style="width:100%;">
                         <img src="../assets/icons/trash.svg" alt="" class="icon" style="margin-right:4px;"> Delete
                     </button>
                 </div>
@@ -118,13 +118,13 @@ window.viewSurvey = function(id) {
     window.location.href = 'dashboard.html';
 };
 
-window.deleteSurvey = async function(id) {
+window.deleteSurvey = async function(id, event) {
     if (!confirm('Are you sure you want to delete this survey? This action cannot be undone.')) {
         return;
     }
 
     // Show loading state
-    const deleteBtn = event.target.closest('button');
+    const deleteBtn = event?.target?.closest('button');
     if (deleteBtn) {
         deleteBtn.disabled = true;
         deleteBtn.innerHTML = '<div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0 auto;"></div>';
