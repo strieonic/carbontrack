@@ -1,7 +1,7 @@
 import { fetchLatest } from './db.js';
 import { showToast } from './nav.js';
 
-// All suggestions database (rule-based AI)
+// Rule-based suggestions database
 const SUGGESTIONS_DB = [
     // ======= HIGH IMPACT =======
     {
@@ -99,6 +99,81 @@ const impactColors = { high: '#ef4444', medium: '#f59e0b', low: '#48c78e' };
 const impactLabels = { high: '🔴 High Impact', medium: '🟡 Medium Impact', low: '🟢 Quick Win' };
 
 let allSuggestions = [];
+let aiSuggestions = [];
+let isLoadingAI = false;
+
+// Generate AI-powered personalized suggestions
+async function generateAISuggestions(userData) {
+    if (isLoadingAI || !window.puter) return [];
+    
+    isLoadingAI = true;
+    
+    try {
+        const prompt = `You are a sustainability expert analyzing carbon footprint data for an Indian household. Based on the following data, provide 3-5 highly personalized, actionable suggestions to reduce their carbon emissions.
+
+DATA:
+- Total CO₂: ${userData.total_co2 || 0} kg/month
+- Electricity: ${userData.electricity_co2 || 0} kg CO₂ (${userData.electricity_kwh || 0} kWh)
+- Transport: ${userData.transport_co2 || 0} kg CO₂ (Petrol: ${userData.petrol_km || 0} km, Diesel: ${userData.diesel_km || 0} km, EV: ${userData.ev_km || 0} km)
+- Cooking: ${userData.cooking_co2 || 0} kg CO₂ (LPG: ${userData.lpg_cylinders || 0} cylinders, Induction: ${userData.induction_hours || 0} hrs)
+- Appliances: ${userData.appliance_co2 || 0} kg CO₂ (AC: ${userData.ac_hours || 0} hrs, Washing: ${userData.washing_uses || 0} uses/week)
+- Waste: ${userData.waste_co2 || 0} kg CO₂ (${userData.waste_kg_per_day || 0} kg/day)
+- House Type: ${userData.house_type || 'N/A'}
+- People: ${userData.people || 1}
+- City: ${userData.city || 'N/A'}
+
+REQUIREMENTS:
+1. Each suggestion must be specific to their actual usage patterns
+2. Include realistic CO₂ savings in kg/month
+3. Provide practical implementation steps for Indian context
+4. Categorize as "high", "medium", or "low" impact
+5. Use appropriate emoji for each suggestion
+
+FORMAT YOUR RESPONSE AS A JSON ARRAY:
+[
+  {
+    "icon": "emoji",
+    "title": "Short title",
+    "desc": "Detailed description with specific steps",
+    "saving": "X kg CO₂/month",
+    "impact": "high|medium|low",
+    "category": "electricity|transport|cooking|appliances|waste"
+  }
+]
+
+ONLY return the JSON array, no other text.`;
+
+        const response = await puter.ai.chat(prompt, {
+            model: "gpt-5-nano",
+            temperature: 0.7,
+            max_tokens: 1500
+        });
+
+        // Parse the AI response
+        let aiText = response;
+        if (typeof response === 'object' && response.message) {
+            aiText = response.message.content || response.message;
+        }
+        
+        // Extract JSON from response
+        const jsonMatch = aiText.match(/\[[\s\S]*\]/);
+        if (jsonMatch) {
+            const suggestions = JSON.parse(jsonMatch[0]);
+            return suggestions.map((s, i) => ({
+                id: `ai_${i}`,
+                ...s,
+                condition: () => true
+            }));
+        }
+        
+        return [];
+    } catch (err) {
+        console.error('AI suggestion generation failed:', err);
+        return [];
+    } finally {
+        isLoadingAI = false;
+    }
+}
 
 window.filterSuggestions = function (filter) {
     document.querySelectorAll('.sug-tab').forEach(t => t.classList.toggle('active', t.dataset.filter === filter));
@@ -110,12 +185,16 @@ window.filterSuggestions = function (filter) {
 };
 
 function renderSugCard(sug) {
+    const isAI = sug.id?.startsWith('ai_');
     return `
     <div class="sug-card glass-card fade-up" data-impact="${sug.impact}">
       <div class="sug-top">
         <div class="sug-icon">${sug.icon}</div>
-        <div class="sug-impact-badge" style="background:${impactColors[sug.impact]}22;color:${impactColors[sug.impact]};border:1px solid ${impactColors[sug.impact]}44">
-          ${impactLabels[sug.impact]}
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          ${isAI ? '<div style="background:#8b5cf622;color:#8b5cf6;padding:4px 8px;border-radius:50px;font-size:0.7rem;font-weight:700;border:1px solid #8b5cf644;">🤖 AI</div>' : ''}
+          <div class="sug-impact-badge" style="background:${impactColors[sug.impact]}22;color:${impactColors[sug.impact]};border:1px solid ${impactColors[sug.impact]}44">
+            ${impactLabels[sug.impact]}
+          </div>
         </div>
       </div>
       <h3>${sug.title}</h3>
@@ -151,21 +230,32 @@ async function loadSuggestions() {
             content.style.display = 'block';
         }
 
-        // Generate applicable suggestions
-        allSuggestions = SUGGESTIONS_DB.filter(sug => {
+        // Generate AI suggestions first
+        showToast('🤖 Generating AI-powered suggestions...', 'info');
+        aiSuggestions = await generateAISuggestions(latest);
+        
+        // Generate rule-based suggestions
+        const ruleSuggestions = SUGGESTIONS_DB.filter(sug => {
             try { return sug.condition(latest); } catch { return false; }
         });
+
+        // Combine AI and rule-based suggestions (AI first)
+        allSuggestions = [...aiSuggestions, ...ruleSuggestions];
 
         // Render header
         const header = document.getElementById('sugHeader');
         if (header) {
             const total = latest.total_co2 || 0;
+            const aiCount = aiSuggestions.length;
             header.innerHTML = `
         <div class="sug-header-inner">
           <div>
             <p style="color:var(--clr-text-muted);font-size:.85rem;margin-bottom:4px;">Your monthly footprint</p>
             <div class="sug-total">${total} <span>kg CO₂</span></div>
-            <p style="color:var(--clr-text-secondary);margin-top:8px;">We found <strong style="color:var(--clr-primary)">${allSuggestions.length} personalised suggestions</strong> for you</p>
+            <p style="color:var(--clr-text-secondary);margin-top:8px;">
+              ${aiCount > 0 ? `<strong style="color:var(--clr-primary)">🤖 ${aiCount} AI-powered</strong> + ` : ''}
+              <strong style="color:var(--clr-primary)">${ruleSuggestions.length} rule-based</strong> suggestions
+            </p>
           </div>
           <div class="sug-saving-potential">
             <div class="sp-label">Total potential saving</div>
@@ -179,6 +269,10 @@ async function loadSuggestions() {
         // Render grid
         const grid = document.getElementById('sugGrid');
         if (grid) grid.innerHTML = allSuggestions.map(renderSugCard).join('');
+        
+        if (aiCount > 0) {
+            showToast(`✨ ${aiCount} AI suggestions generated!`, 'success');
+        }
 
     } catch (err) {
         console.error(err);
