@@ -102,71 +102,124 @@ let allSuggestions = [];
 let aiSuggestions = [];
 let isLoadingAI = false;
 
-// Generate AI-powered personalized suggestions
+// Generate AI-powered personalized suggestions using smart rules
 async function generateAISuggestions(userData) {
-    if (isLoadingAI || !window.puter) return [];
+    if (isLoadingAI) return [];
     
     isLoadingAI = true;
     
     try {
-        const prompt = `You are a sustainability expert analyzing carbon footprint data for an Indian household. Based on the following data, provide 3-5 highly personalized, actionable suggestions to reduce their carbon emissions.
-
-DATA:
-- Total CO₂: ${userData.total_co2 || 0} kg/month
-- Electricity: ${userData.electricity_co2 || 0} kg CO₂ (${userData.electricity_kwh || 0} kWh)
-- Transport: ${userData.transport_co2 || 0} kg CO₂ (Petrol: ${userData.petrol_km || 0} km, Diesel: ${userData.diesel_km || 0} km, EV: ${userData.ev_km || 0} km)
-- Cooking: ${userData.cooking_co2 || 0} kg CO₂ (LPG: ${userData.lpg_cylinders || 0} cylinders, Induction: ${userData.induction_hours || 0} hrs)
-- Appliances: ${userData.appliance_co2 || 0} kg CO₂ (AC: ${userData.ac_hours || 0} hrs, Washing: ${userData.washing_uses || 0} uses/week)
-- Waste: ${userData.waste_co2 || 0} kg CO₂ (${userData.waste_kg_per_day || 0} kg/day)
-- House Type: ${userData.house_type || 'N/A'}
-- People: ${userData.people || 1}
-- City: ${userData.city || 'N/A'}
-
-REQUIREMENTS:
-1. Each suggestion must be specific to their actual usage patterns
-2. Include realistic CO₂ savings in kg/month
-3. Provide practical implementation steps for Indian context
-4. Categorize as "high", "medium", or "low" impact
-5. Use appropriate emoji for each suggestion
-
-FORMAT YOUR RESPONSE AS A JSON ARRAY:
-[
-  {
-    "icon": "emoji",
-    "title": "Short title",
-    "desc": "Detailed description with specific steps",
-    "saving": "X kg CO₂/month",
-    "impact": "high|medium|low",
-    "category": "electricity|transport|cooking|appliances|waste"
-  }
-]
-
-ONLY return the JSON array, no other text.`;
-
-        const response = await puter.ai.chat(prompt, {
-            model: "gpt-5-nano",
-            temperature: 0.7,
-            max_tokens: 1500
+        const suggestions = [];
+        const total = userData.total_co2 || 0;
+        const elec = userData.electricity_co2 || 0;
+        const transport = userData.transport_co2 || 0;
+        const cooking = userData.cooking_co2 || 0;
+        const appliance = userData.appliance_co2 || 0;
+        const waste = userData.waste_co2 || 0;
+        
+        // Find the top 3 emission sources
+        const sources = [
+            { name: 'electricity', value: elec, percent: (elec/total*100).toFixed(0) },
+            { name: 'transport', value: transport, percent: (transport/total*100).toFixed(0) },
+            { name: 'cooking', value: cooking, percent: (cooking/total*100).toFixed(0) },
+            { name: 'appliances', value: appliance, percent: (appliance/total*100).toFixed(0) },
+            { name: 'waste', value: waste, percent: (waste/total*100).toFixed(0) }
+        ].sort((a, b) => b.value - a.value).slice(0, 3);
+        
+        // Generate personalized suggestions for top sources
+        sources.forEach((source, index) => {
+            if (source.value < 5) return; // Skip if too small
+            
+            const impact = index === 0 ? 'high' : index === 1 ? 'medium' : 'low';
+            
+            if (source.name === 'electricity' && elec > 30) {
+                const kwh = userData.electricity_kwh || 0;
+                const saving = Math.round(elec * 0.25);
+                suggestions.push({
+                    id: `ai_elec_${index}`,
+                    icon: '⚡',
+                    title: `Reduce Electricity Usage - Your Top Priority`,
+                    desc: `Your electricity emissions (${elec} kg CO₂, ${source.percent}% of total) from ${kwh} kWh usage are ${elec > 100 ? 'very high' : 'high'}. Switch to 5-star rated appliances, use natural light during day, and set AC to 26°C. Your city ${userData.city || 'location'} likely has solar incentives - check MNRE subsidy schemes.`,
+                    saving: `~${saving} kg CO₂/month`,
+                    impact,
+                    category: 'electricity'
+                });
+            }
+            
+            if (source.name === 'transport' && transport > 20) {
+                const petrolKm = userData.petrol_km || 0;
+                const dieselKm = userData.diesel_km || 0;
+                const totalKm = petrolKm + dieselKm;
+                const saving = Math.round(transport * 0.30);
+                suggestions.push({
+                    id: `ai_transport_${index}`,
+                    icon: '🚗',
+                    title: `Optimize Your ${totalKm} km/month Commute`,
+                    desc: `Transport is ${source.percent}% of your footprint (${transport} kg CO₂). ${petrolKm > 100 ? 'Consider carpooling or metro for daily commute.' : ''} ${dieselKm > 50 ? 'Diesel vehicles emit more - plan to switch to CNG/EV.' : ''} Even reducing 30% of trips saves significantly. Check if your office offers WFH options.`,
+                    saving: `~${saving} kg CO₂/month`,
+                    impact,
+                    category: 'transport'
+                });
+            }
+            
+            if (source.name === 'cooking' && cooking > 15) {
+                const lpg = userData.lpg_cylinders || 0;
+                const saving = Math.round(cooking * 0.20);
+                suggestions.push({
+                    id: `ai_cooking_${index}`,
+                    icon: '🔥',
+                    title: `Optimize LPG Usage (${lpg} Cylinders/Month)`,
+                    desc: `Cooking emissions are ${source.percent}% of total (${cooking} kg CO₂). Use pressure cookers for dal/rice (saves 70% fuel), keep lids on while cooking, and soak dal/beans overnight. Consider induction for boiling water - it's 10% more efficient than LPG.`,
+                    saving: `~${saving} kg CO₂/month`,
+                    impact,
+                    category: 'cooking'
+                });
+            }
+            
+            if (source.name === 'appliances' && appliance > 15) {
+                const acHours = userData.ac_hours || 0;
+                const saving = Math.round(appliance * 0.25);
+                suggestions.push({
+                    id: `ai_appliance_${index}`,
+                    icon: '❄️',
+                    title: `Smart AC Management (${acHours} hrs/day)`,
+                    desc: `Appliances contribute ${source.percent}% (${appliance} kg CO₂). ${acHours > 6 ? 'Your AC usage is very high.' : 'Your AC usage can be optimized.'} Set to 26°C (each degree lower uses 6% more power), use timer to turn off after you sleep, clean filters monthly, and use ceiling fans to circulate cool air better.`,
+                    saving: `~${saving} kg CO₂/month`,
+                    impact,
+                    category: 'appliances'
+                });
+            }
+            
+            if (source.name === 'waste' && waste > 10) {
+                const wasteKg = userData.waste_kg_per_day || 0;
+                const saving = Math.round(waste * 0.40);
+                suggestions.push({
+                    id: `ai_waste_${index}`,
+                    icon: '♻️',
+                    title: `Reduce ${wasteKg} kg/day Waste Generation`,
+                    desc: `Waste is ${source.percent}% of emissions (${waste} kg CO₂). Start composting kitchen waste (reduces 50% of waste), avoid single-use plastics, buy in bulk to reduce packaging, and donate/sell items instead of discarding. Many Indian cities now have waste segregation mandates.`,
+                    saving: `~${saving} kg CO₂/month`,
+                    impact,
+                    category: 'waste'
+                });
+            }
         });
-
-        // Parse the AI response
-        let aiText = response;
-        if (typeof response === 'object' && response.message) {
-            aiText = response.message.content || response.message;
+        
+        // Add one quick win suggestion
+        if (userData.people > 1) {
+            suggestions.push({
+                id: 'ai_quick_win',
+                icon: '💡',
+                title: `Family Action: ${userData.people} People Can Make Big Impact`,
+                desc: `With ${userData.people} people in your household, small changes multiply. If everyone unplugs devices when not in use, takes 5-min showers, and turns off lights, you'll save ~${Math.round(total * 0.10)} kg CO₂/month collectively. Make it a family challenge!`,
+                saving: `~${Math.round(total * 0.10)} kg CO₂/month`,
+                impact: 'low',
+                category: 'electricity'
+            });
         }
         
-        // Extract JSON from response
-        const jsonMatch = aiText.match(/\[[\s\S]*\]/);
-        if (jsonMatch) {
-            const suggestions = JSON.parse(jsonMatch[0]);
-            return suggestions.map((s, i) => ({
-                id: `ai_${i}`,
-                ...s,
-                condition: () => true
-            }));
-        }
+        return suggestions.map(s => ({ ...s, condition: () => true }));
         
-        return [];
     } catch (err) {
         console.error('AI suggestion generation failed:', err);
         return [];
@@ -231,12 +284,8 @@ async function loadSuggestions() {
         }
 
         // Generate AI suggestions first
-        if (window.puter) {
-            showToast('🤖 Generating AI-powered suggestions...', 'info');
-            aiSuggestions = await generateAISuggestions(latest);
-        } else {
-            console.warn('Puter.js not loaded, skipping AI suggestions');
-        }
+        showToast('🤖 Analyzing your data...', 'info');
+        aiSuggestions = await generateAISuggestions(latest);
         
         // Generate rule-based suggestions
         const ruleSuggestions = SUGGESTIONS_DB.filter(sug => {
