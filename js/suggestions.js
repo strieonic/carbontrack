@@ -326,7 +326,11 @@ async function loadSuggestions() {
         // Render grid
         const grid = document.getElementById('sugGrid');
         if (grid) {
+            console.log('Rendering suggestions:', allSuggestions.length, allSuggestions);
             grid.innerHTML = allSuggestions.map(renderSugCard).join('');
+            console.log('Grid HTML length:', grid.innerHTML.length);
+        } else {
+            console.error('Grid element not found!');
         }
         
         if (aiCount > 0) {
