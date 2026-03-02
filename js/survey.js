@@ -181,11 +181,15 @@ async function submitSurvey() {
             trees_needed: result.treesNeeded,
             carbon_grade: result.rating.grade,
         };
-        // Convert numeric strings
-        ['people', 'electricity_units', 'petrol_km', 'diesel_km', 'public_km', 'ev_km',
+        // Convert numeric strings - handle empty strings properly
+        ['people', 'electricity_bill', 'electricity_units', 'petrol_km', 'diesel_km', 'public_km', 'ev_km',
             'lpg_cylinders', 'png_usage', 'induction_hours', 'ac_hours', 'washing_uses',
             'laptop_hours', 'tv_hours', 'waste_kg_per_day'].forEach(k => {
-                if (payload[k] !== '' && payload[k] !== undefined) payload[k] = parseFloat(payload[k]) || 0;
+                if (payload[k] === '' || payload[k] === null || payload[k] === undefined) {
+                    payload[k] = 0;
+                } else {
+                    payload[k] = parseFloat(payload[k]) || 0;
+                }
             });
 
         await saveEntry(payload);
