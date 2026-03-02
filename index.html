@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CarbonTrack – Smart Energy & Carbon Footprint Dashboard</title>
+  <meta name="description" content="Track your household carbon footprint with AI-powered insights. Smart City sustainability analytics for a greener tomorrow." />
+  <meta name="keywords" content="carbon footprint, energy dashboard, sustainability, smart city, CO2 tracker" />
+  <link rel="icon" href="assets/icons/leaf.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon"><img src="assets/icons/leaf.svg" alt="CarbonTrack" class="icon icon-md" style="color: var(--clr-primary);"></div>
+      <span>CarbonTrack</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="pages/survey.html">Survey</a></li>
+      <li><a href="pages/dashboard.html">Dashboard</a></li>
+      <li><a href="pages/comparison.html">Compare</a></li>
+      <li><a href="pages/suggestions.html">AI Tips</a></li>
+      <li><a href="pages/impact.html">Impact</a></li>
+    </ul>
+    <a href="pages/survey.html" class="btn btn-primary nav-cta">Start Survey ↗</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-glow"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge fade-up">
+        <span class="pulse-dot"></span>
+        Smart City Sustainability Platform
+      </div>
+      <h1 class="hero-title fade-up">
+        Measure Your <br />
+        <span class="gradient-text">Carbon Footprint</span><br />
+        Live, Today.
+      </h1>
+      <p class="hero-subtitle fade-up">
+        Track household energy usage, calculate CO₂ emissions, and get AI-powered
+        sustainability insights — all without signing up.
+      </p>
+      <div class="hero-actions fade-up">
+        <a href="pages/survey.html" class="btn btn-primary btn-lg">
+          <img src="assets/icons/rocket.svg" alt="" class="icon" style="color: inherit; margin-right: 8px;"> Start Your Assessment
+        </a>
+        <a href="pages/dashboard.html" class="btn btn-outline btn-lg">
+          <img src="assets/icons/chart.svg" alt="" class="icon" style="color: inherit; margin-right: 8px;"> View Dashboard
+        </a>
+      </div>
+      <div class="hero-stats fade-up">
+        <div class="hero-stat">
+          <span class="hero-stat-value" id="statUsers">2,841</span>
+          <span class="hero-stat-label">Assessments</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">21%</span>
+          <span class="hero-stat-label">Avg Reduction</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">50+</span>
+          <span class="hero-stat-label">Cities Tracked</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3D Spline Earth with fallback -->
+    <div class="hero-visual fade-up">
+      <div class="spline-wrapper">
+        <spline-viewer url="https://prod.spline.design/6Wq1Q7YoRtTiT3dN/scene.splinecode" style="width:100%;height:100%;"></spline-viewer>
+        <div class="earth-fallback" id="earthFallback">
+          <div class="earth-sphere">
+            <div class="earth-ring"></div>
+            <div class="earth-dots">
+              <span class="edot" style="--x:30%;--y:40%"></span>
+              <span class="edot" style="--x:60%;--y:30%"></span>
+              <span class="edot" style="--x:45%;--y:65%"></span>
+              <span class="edot" style="--x:70%;--y:55%"></span>
+              <span class="edot" style="--x:20%;--y:60%"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="floating-cards">
+        <div class="float-card" style="--delay:0s">
+          <span><img src="assets/icons/lightning.svg" alt="Energy" class="icon icon-lg"></span>
+          <div>
+            <div class="fc-val">-18%</div>
+            <div class="fc-lbl">Energy Saved</div>
+          </div>
+        </div>
+        <div class="float-card" style="--delay:0.8s">
+          <span><img src="assets/icons/tree.svg" alt="Trees" class="icon icon-lg"></span>
+          <div>
+            <div class="fc-val">12</div>
+            <div class="fc-lbl">Trees Equivalent</div>
+          </div>
+        </div>
+        <div class="float-card" style="--delay:1.6s">
+          <span><img src="assets/icons/chart.svg" alt="Analytics" class="icon icon-lg"></span>
+          <div>
+            <div class="fc-val">A+</div>
+            <div class="fc-lbl">Eco Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-dot"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="text-center fade-up">
+      <div class="section-label"><img src="assets/icons/settings.svg" alt="" class="icon" style="color: var(--clr-primary);"> How It Works</div>
+      <h2 class="section-title">Three Steps to <span>Sustainability</span></h2>
+      <p class="section-subtitle mx-auto">No sign-up required. Your data is anonymously stored and always accessible from this device.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card fade-up" style="--i:0">
+        <div class="step-num">01</div>
+        <div class="step-icon"><img src="assets/icons/document.svg" alt="Survey" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+        <h3>Fill the Survey</h3>
+        <p>Enter your household energy usage, transportation habits, cooking patterns, and daily activities.</p>
+        <a href="pages/survey.html" class="step-link">Start Survey →</a>
+      </div>
+      <div class="step-card fade-up" style="--i:1">
+        <div class="step-num">02</div>
+        <div class="step-icon"><img src="assets/icons/lightning.svg" alt="Calculator" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+        <h3>Get Calculated</h3>
+        <p>Our engine computes your monthly CO₂ emissions using India-specific emission factors, instantly.</p>
+        <a href="pages/dashboard.html" class="step-link">See Dashboard →</a>
+      </div>
+      <div class="step-card fade-up" style="--i:2">
+        <div class="step-num">03</div>
+        <div class="step-icon"><img src="assets/icons/robot.svg" alt="AI" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+        <h3>AI Suggestions</h3>
+        <p>Receive personalized, rule-based recommendations to reduce your footprint month over month.</p>
+        <a href="pages/suggestions.html" class="step-link">View Tips →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section section">
+    <div class="text-center fade-up">
+      <div class="section-label"><img src="assets/icons/lightbulb.svg" alt="" class="icon" style="color: var(--clr-primary);"> Platform Features</div>
+      <h2 class="section-title">Everything You Need to <span>Go Green</span></h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card glass-card fade-up">
+        <div class="feature-icon" style="--ic:#48c78e"><img src="assets/icons/chart.svg" alt="Dashboard" class="icon icon-2xl" style="color: currentColor;"></div>
+        <h3>Live Dashboard</h3>
+        <p>Interactive charts showing your emission breakdown, energy trends, and historical data.</p>
+      </div>
+      <div class="feature-card glass-card fade-up">
+        <div class="feature-icon" style="--ic:#38bdf8"><img src="assets/icons/refresh.svg" alt="Comparison" class="icon icon-2xl" style="color: currentColor;"></div>
+        <h3>Month Comparison</h3>
+        <p>Automatically compare current vs previous assessment to track your progress.</p>
+      </div>
+      <div class="feature-card glass-card fade-up">
+        <div class="feature-icon" style="--ic:#a78bfa"><img src="assets/icons/robot.svg" alt="AI" class="icon icon-2xl" style="color: currentColor;"></div>
+        <h3>Smart Suggestions</h3>
+        <p>AI rule-based recommendations tailored to your specific consumption patterns.</p>
+      </div>
+      <div class="feature-card glass-card fade-up">
+        <div class="feature-icon" style="--ic:#f59e0b"><img src="assets/icons/globe.svg" alt="Impact" class="icon icon-2xl" style="color: currentColor;"></div>
+        <h3>Impact Visualization</h3>
+        <p>See your individual contribution to global climate goals with animated stats.</p>
+      </div>
+      <div class="feature-card glass-card fade-up">
+        <div class="feature-icon" style="--ic:#f97316"><img src="assets/icons/lock.svg" alt="Privacy" class="icon icon-2xl" style="color: currentColor;"></div>
+        <h3>Privacy First</h3>
+        <p>No account needed. Identified only by your browser device ID — zero personal data collected.</p>
+      </div>
+      <div class="feature-card glass-card fade-up">
+        <div class="feature-icon" style="--ic:#3dd9b3"><img src="assets/icons/sprout.svg" alt="Eco" class="icon icon-2xl" style="color: currentColor;"></div>
+        <h3>Eco Rating</h3>
+        <p>Get a letter grade (A+ to D) based on your per-person monthly carbon output.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner-section section">
+    <div class="cta-banner glass-card fade-up">
+      <div class="cta-blob"></div>
+      <div class="cta-content">
+        <div class="section-label"><img src="assets/icons/rocket.svg" alt="" class="icon" style="color: var(--clr-primary);"> Ready to Start?</div>
+        <h2>Calculate Your Carbon Footprint <span>in 2 Minutes</span></h2>
+        <p>Join thousands of households tracking and reducing their environmental impact.</p>
+        <div class="cta-actions">
+          <a href="pages/survey.html" class="btn btn-primary btn-lg">Begin Assessment →</a>
+          <a href="pages/impact.html" class="btn btn-ghost btn-lg">Learn About Impact</a>
+        </div>
+      </div>
+      <div class="cta-visual">
+        <div class="cta-ring ring-1"></div>
+        <div class="cta-ring ring-2"></div>
+        <div class="cta-ring ring-3"></div>
+        <span class="cta-emoji"><img src="assets/icons/globe.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary);"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:28px;height:28px;background:linear-gradient(135deg,#48c78e,#3dd9b3);border-radius:8px;display:grid;place-items:center;font-size:0.9rem;"><img src="assets/icons/leaf.svg" alt="" class="icon" style="color: white; width: 100%; height: 100%;"></div>
+      <span style="font-family:var(--font-primary);font-weight:700;">CarbonTrack</span>
+    </div>
+    <p>Smart Energy & Carbon Footprint Dashboard for Smart Cities</p>
+    <p>Anonymous · Privacy-First · Free Forever</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="pages/survey.html">Survey</a>
+      <a href="pages/dashboard.html">Dashboard</a>
+      <a href="pages/comparison.html">Compare</a>
+      <a href="pages/suggestions.html">AI Tips</a>
+      <a href="pages/impact.html">Impact</a>
+    </div>
+    <div class="divider" style="margin:24px auto;max-width:400px;"></div>
+    <p style="font-size:0.78rem;">© 2026 CarbonTrack · Built for Smart Cities · All Rights Reserved</p>
+  </footer>
+
+  <div class="toast-container"></div>
+
+  <script type="module" src="js/nav.js"></script>
+  <script type="module" src="js/home.js"></script>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@0.9.490/build/spline-viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+/* SUGGESTIONS PAGE */
+.sug-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    gap: 16px;
+    color: var(--clr-text-muted);
+}
+
+.sug-header {
+    padding: 28px;
+    margin-bottom: 24px;
+}
+
+.sug-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.sug-total {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--clr-text-primary);
+}
+
+.sug-total span {
+    font-size: 1rem;
+    color: var(--clr-text-muted);
+    font-weight: 400;
+}
+
+.sug-saving-potential {
+    text-align: center;
+    padding: 20px 28px;
+    background: var(--clr-primary-dim);
+    border: 1px solid rgba(72, 199, 142, 0.2);
+    border-radius: var(--radius-lg);
+}
+
+.sp-label {
+    font-size: 0.78rem;
+    color: var(--clr-text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.sp-val {
+    font-family: var(--font-primary);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--clr-primary);
+}
+
+.sp-sub {
+    font-size: 0.75rem;
+    color: var(--clr-text-muted);
+    margin-top: 4px;
+}
+
+/* Filter Tabs */
+.sug-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.sug-tab {
+    padding: 9px 20px;
+    border-radius: 50px;
+    border: 1.5px solid var(--clr-border);
+    background: transparent;
+    color: var(--clr-text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.sug-tab.active,
+.sug-tab:hover {
+    background: var(--clr-primary-dim);
+    color: var(--clr-primary);
+    border-color: rgba(72, 199, 142, 0.3);
+}
+
+/* Grid */
+.sug-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.sug-card {
+    padding: 24px;
+}
+
+.sug-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.sug-icon {
+    font-size: 2rem;
+}
+
+.sug-impact-badge {
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.sug-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+}
+
+.sug-card p {
+    font-size: 0.88rem;
+    color: var(--clr-text-secondary);
+    margin-bottom: 16px;
+}
+
+.sug-saving {
+    font-size: 0.82rem;
+    color: var(--clr-text-muted);
+    padding: 10px 14px;
+    background: rgba(72, 199, 142, 0.05);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(72, 199, 142, 0.1);
+}
+
+.sug-saving strong {
+    color: var(--clr-primary);
+}
+
+/* General tips */
+.gen-tips {
+    padding: 28px;
+}
+
+.gen-tips h3 {
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.gen-tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.gen-tip {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.gen-tip span {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.gen-tip p {
+    font-size: 0.85rem;
+    color: var(--clr-text-secondary);
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .sug-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gen-tips-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    .sug-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

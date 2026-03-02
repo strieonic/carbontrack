@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Survey – CarbonTrack</title>
+    <meta name="description"
+        content="Fill in your household energy and activity data to calculate your monthly carbon footprint." />
+    <link rel="icon" href="../assets/icons/leaf.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/survey.css" />
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">
+            <div class="logo-icon"><img src="../assets/icons/leaf.svg" alt="CarbonTrack" class="icon icon-md" style="color: var(--clr-primary);"></div>
+            <span>CarbonTrack</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="survey.html" class="active">Survey</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="comparison.html">Compare</a></li>
+            <li><a href="suggestions.html">AI Tips</a></li>
+            <li><a href="impact.html">Impact</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main class="survey-main">
+        <!-- Progress -->
+        <div class="survey-progress-bar">
+            <div class="spb-inner" id="progressFill"></div>
+        </div>
+
+        <div class="survey-container">
+            <!-- Sidebar Steps -->
+            <aside class="survey-sidebar">
+                <div class="sidebar-header">
+                    <h3>Assessment</h3>
+                    <p>Complete all sections</p>
+                </div>
+                <ul class="sidebar-steps" id="sidebarSteps">
+                    <li class="ss-item active" data-step="0"><span class="ss-dot"><img src="../assets/icons/home.svg" alt="Home" class="icon" style="color: currentColor;"></span>Household</li>
+                    <li class="ss-item" data-step="1"><span class="ss-dot"><img src="../assets/icons/lightning.svg" alt="Lightning" class="icon" style="color: currentColor;"></span>Electricity</li>
+                    <li class="ss-item" data-step="2"><span class="ss-dot"><img src="../assets/icons/vehicle.svg" alt="Vehicle" class="icon" style="color: currentColor;"></span>Transport</li>
+                    <li class="ss-item" data-step="3"><span class="ss-dot"><img src="../assets/icons/utensils.svg" alt="Cooking" class="icon" style="color: currentColor;"></span>Cooking</li>
+                    <li class="ss-item" data-step="4"><span class="ss-dot"><img src="../assets/icons/smartphone.svg" alt="Phone" class="icon" style="color: currentColor;"></span>Appliances</li>
+                    <li class="ss-item" data-step="5"><span class="ss-dot"><img src="../assets/icons/trash.svg" alt="Trash" class="icon" style="color: currentColor;"></span>Waste</li>
+                </ul>
+                <div class="sidebar-note">
+                    <span><img src="../assets/icons/lock.svg" alt="Private" class="icon"></span>
+                    <p>Anonymous. No sign-up needed.</p>
+                </div>
+            </aside>
+
+            <!-- Form -->
+            <div class="survey-form-area">
+                <form id="surveyForm" novalidate>
+
+                    <!-- STEP 0: Household -->
+                    <div class="form-step active" data-step="0">
+                        <div class="step-header">
+                            <div class="step-icon-lg"><img src="../assets/icons/home.svg" alt="Home" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+                            <div>
+                                <h2>Household Details</h2>
+                                <p>Tell us about your household setup</p>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label class="input-label" for="city">City / Area <span class="req">*</span></label>
+                                <input class="input-field" type="text" id="city" name="city"
+                                    placeholder="e.g. Pune, Mumbai, Delhi" required />
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="people">Number of People <span
+                                        class="req">*</span></label>
+                                <input class="input-field" type="number" id="people" name="people" min="1" max="20"
+                                    placeholder="e.g. 3" required />
+                            </div>
+                            <div class="input-group full-width">
+                                <label class="input-label" for="houseType">House Type <span class="req">*</span></label>
+                                <select class="input-field" id="houseType" name="house_type" required>
+                                    <option value="">— Select type —</option>
+                                    <option value="Apartment"><img src="../assets/icons/building.svg" alt="" class="icon icon-sm" style="color: currentColor; margin-right: 4px;"> Apartment</option>
+                                    <option value="Independent"><img src="../assets/icons/home.svg" alt="" class="icon icon-sm" style="color: currentColor; margin-right: 4px;"> Independent House / Villa</option>
+                                    <option value="Hostel"><img src="../assets/icons/smartphone.svg" alt="" class="icon icon-sm" style="color: currentColor; margin-right: 4px;"> Hostel / PG</option>
+                                    <option value="Office"><img src="../assets/icons/building.svg" alt="" class="icon icon-sm" style="color: currentColor; margin-right: 4px;"> Office / Commercial</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 1: Electricity -->
+                    <div class="form-step" data-step="1">
+                        <div class="step-header">
+                            <div class="step-icon-lg"><img src="../assets/icons/lightning.svg" alt="Electricity" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+                            <div>
+                                <h2>Electricity Usage</h2>
+                                <p>Enter either your bill amount OR units consumed (we convert automatically)</p>
+                            </div>
+                        </div>
+                        <div class="elec-toggle-group">
+                            <button type="button" class="etog active" id="togBill" onclick="switchElecMode('bill')">₹
+                                Monthly Bill</button>
+                            <button type="button" class="etog" id="togUnits" onclick="switchElecMode('units')">⚡ kWh
+                                Units</button>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group" id="billGroup">
+                                <label class="input-label" for="electricityBill">Monthly Electricity Bill (₹)</label>
+                                <input class="input-field" type="number" id="electricityBill" name="electricity_bill"
+                                    min="0" placeholder="e.g. 1600" />
+                                <span class="input-hint">Bill ÷ 8 = approximate units</span>
+                            </div>
+                            <div class="input-group hidden" id="unitsGroup">
+                                <label class="input-label" for="electricityUnits">Monthly Units (kWh)</label>
+                                <input class="input-field" type="number" id="electricityUnits" name="electricity_units"
+                                    min="0" placeholder="e.g. 200" />
+                                <span class="input-hint">Check your electricity bill for units</span>
+                            </div>
+                        </div>
+                        <div class="elec-preview glass-card" id="elecPreview">
+                            <span><img src="../assets/icons/chart.svg" alt="" class="icon" style="margin-right: 4px;"> Estimated: <strong id="elecEstUnits">—</strong> kWh → <strong
+                                    id="elecEstCO2">—</strong> kg CO₂</span>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Transport -->
+                    <div class="form-step" data-step="2">
+                        <div class="step-header">
+                            <div class="step-icon-lg">🚗</div>
+                            <div>
+                                <h2>Transportation</h2>
+                                <p>Monthly distance travelled by each mode</p>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label class="input-label" for="petrolKm"><img src="../assets/icons/vehicle.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Petrol Vehicle (km/month)</label>
+                                <input class="input-field" type="number" id="petrolKm" name="petrol_km" min="0"
+                                    placeholder="0" />
+                                <span class="input-hint">0.192 kg CO₂/km</span>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="dieselKm"><img src="../assets/icons/bus.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Diesel Vehicle (km/month)</label>
+                                <input class="input-field" type="number" id="dieselKm" name="diesel_km" min="0"
+                                    placeholder="0" />
+                                <span class="input-hint">0.171 kg CO₂/km</span>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="publicKm"><img src="../assets/icons/bus.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Public Transport (km/month)</label>
+                                <input class="input-field" type="number" id="publicKm" name="public_km" min="0"
+                                    placeholder="0" />
+                                <span class="input-hint">Bus / Metro — 0.089 kg CO₂/km</span>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="evKm"><img src="../assets/icons/lightning.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Electric Vehicle (km/month)</label>
+                                <input class="input-field" type="number" id="evKm" name="ev_km" min="0"
+                                    placeholder="0" />
+                                <span class="input-hint">Grid-adjusted 0.041 kg CO₂/km</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Cooking -->
+                    <div class="form-step" data-step="3">
+                        <div class="step-header">
+                            <div class="step-icon-lg"><img src="../assets/icons/utensils.svg" alt="Cooking" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+                            <div>
+                                <h2>Cooking Habits</h2>
+                                <p>Monthly cooking fuel consumption</p>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label class="input-label" for="lpgCylinders"><img src="../assets/icons/circle-medium.svg" alt="" class="icon icon-sm" style="margin-right: 4px;"> LPG Cylinders / month</label>
+                                <input class="input-field" type="number" id="lpgCylinders" name="lpg_cylinders" min="0"
+                                    step="0.1" placeholder="e.g. 1" />
+                                <span class="input-hint">Standard 14.2 kg cylinder</span>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="pngUsage"><img src="../assets/icons/lightbulb.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> PNG Usage (m³/month)</label>
+                                <input class="input-field" type="number" id="pngUsage" name="png_usage" min="0"
+                                    step="0.1" placeholder="0 if not applicable" />
+                                <span class="input-hint">Piped Natural Gas</span>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="inductionHours"><img src="../assets/icons/lightning.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Induction Cooktop (hrs/day)</label>
+                                <input class="input-field" type="number" id="inductionHours" name="induction_hours"
+                                    min="0" step="0.5" placeholder="e.g. 1.5" />
+                                <span class="input-hint">Average daily hours of use</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Appliances -->
+                    <div class="form-step" data-step="4">
+                        <div class="step-header">
+                            <div class="step-icon-lg"><img src="../assets/icons/smartphone.svg" alt="Appliances" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+                            <div>
+                                <h2>Home Appliances</h2>
+                                <p>Daily usage hours for major appliances</p>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label class="input-label" for="acHours"><img src="../assets/icons/snowflake.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Air Conditioner (hrs/day)</label>
+                                <input class="input-field" type="number" id="acHours" name="ac_hours" min="0" max="24"
+                                    step="0.5" placeholder="0 if not used" />
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="washingUses"><img src="../assets/icons/droplet.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Washing Machine (uses/week)</label>
+                                <input class="input-field" type="number" id="washingUses" name="washing_uses" min="0"
+                                    max="21" placeholder="e.g. 3" />
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="laptopHours"><img src="../assets/icons/laptop.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Laptop (hrs/day)</label>
+                                <input class="input-field" type="number" id="laptopHours" name="laptop_hours" min="0"
+                                    max="24" placeholder="e.g. 6" />
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label" for="tvHours"><img src="../assets/icons/tv.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Television (hrs/day)</label>
+                                <input class="input-field" type="number" id="tvHours" name="tv_hours" min="0" max="24"
+                                    placeholder="e.g. 3" />
+                            </div>
+                            <div class="input-group full-width">
+                                <label class="input-label"><img src="../assets/icons/snowflake.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Refrigerator</label>
+                                <div class="toggle-options">
+                                    <label class="tog-opt">
+                                        <input type="radio" name="has_refrigerator" value="yes" checked />
+                                        <span>Yes, I have one</span>
+                                    </label>
+                                    <label class="tog-opt">
+                                        <input type="radio" name="has_refrigerator" value="no" />
+                                        <span>No refrigerator</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: Waste -->
+                    <div class="form-step" data-step="5">
+                        <div class="step-header">
+                            <div class="step-icon-lg"><img src="../assets/icons/trash.svg" alt="Waste" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+                            <div>
+                                <h2>Waste Generation</h2>
+                                <p>Daily household waste and disposal habits</p>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label class="input-label" for="wasteKg"><img src="../assets/icons/trash.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Daily Waste (kg/day)</label>
+                                <input class="input-field" type="number" id="wasteKg" name="waste_kg_per_day" min="0"
+                                    step="0.1" placeholder="e.g. 0.5" />
+                                <span class="input-hint">Average Indian household: 0.4–0.7 kg/day</span>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label"><img src="../assets/icons/recycle.svg" alt="" class="icon icon-sm" style="margin-right: 4px; color: currentColor;"> Do you segregate waste?</label>
+                                <div class="toggle-options">
+                                    <label class="tog-opt">
+                                        <input type="radio" name="has_segregation" value="yes" />
+                                        <span>Yes, wet/dry separation</span>
+                                    </label>
+                                    <label class="tog-opt">
+                                        <input type="radio" name="has_segregation" value="no" checked />
+                                        <span>No segregation</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Results Preview -->
+                        <div class="result-preview glass-card" id="resultPreview">
+                            <div class="rp-loading" id="rpLoading">
+                                <div class="spinner" style="margin:0;width:24px;height:24px;border-width:2px;"></div>
+                                Calculating…
+                            </div>
+                            <div class="rp-data hidden" id="rpData">
+                                <div class="rp-header">
+                                    <h3><img src="../assets/icons/globe.svg" alt="" class="icon" style="margin-right: 8px; color: var(--clr-primary);"> Your Estimated Footprint</h3>
+                                    <div class="rp-grade" id="rpGrade">—</div>
+                                </div>
+                                <div class="rp-stats">
+                                    <div class="rp-stat">
+                                        <div class="rp-val" id="rpTotal">—</div>
+                                        <div class="rp-lbl">Total CO₂ (kg)</div>
+                                    </div>
+                                    <div class="rp-stat">
+                                        <div class="rp-val" id="rpPer">—</div>
+                                        <div class="rp-lbl">Per Person (kg)</div>
+                                    </div>
+                                    <div class="rp-stat">
+                                        <div class="rp-val" id="rpTrees">—</div>
+                                        <div class="rp-lbl">Trees Needed</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <!-- Navigation Buttons -->
+                <div class="step-nav">
+                    <button class="btn btn-ghost" id="prevBtn" onclick="surveyPrev()" style="display:none">←
+                        Back</button>
+                    <div class="step-indicator" id="stepIndicator">Step 1 of 6</div>
+                    <button class="btn btn-primary" id="nextBtn" onclick="surveyNext()">Next →</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Submit Modal -->
+    <div class="modal-backdrop hidden" id="submitModal">
+        <div class="modal glass-card">
+            <div class="modal-icon"><img src="../assets/icons/globe.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+            <h2 id="modalTitle">Saving Your Data…</h2>
+            <p id="modalMsg">Please wait while we store your assessment.</p>
+            <div class="spinner" id="modalSpinner"></div>
+            <div class="modal-actions hidden" id="modalActions">
+                <a href="dashboard.html" class="btn btn-primary"><img src="../assets/icons/chart.svg" alt="" class="icon" style="margin-right: 8px;"> View Dashboard</a>
+                <a href="comparison.html" class="btn btn-outline"><img src="../assets/icons/refresh.svg" alt="" class="icon" style="margin-right: 8px;"> Compare</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container"></div>
+    <script type="module" src="../js/nav.js"></script>
+    <script type="module" src="../js/survey.js"></script>
+</body>
+
+</html>

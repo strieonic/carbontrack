@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Impact Visualization – CarbonTrack</title>
+    <meta name="description" content="See your environmental impact with animated visualizations and global context." />
+    <link rel="icon"
+        href="../assets/icons/leaf.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/impact.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-logo">
+            <div class="logo-icon"><img src="../assets/icons/leaf.svg" alt="CarbonTrack" class="icon icon-md" style="color: var(--clr-primary);"></div><span>CarbonTrack</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="survey.html">Survey</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="comparison.html">Compare</a></li>
+            <li><a href="suggestions.html">AI Tips</a></li>
+            <li><a href="impact.html" class="active">Impact</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    </nav>
+
+    <main style="padding-top:70px;min-height:100vh;">
+        <div class="page-header">
+            <div class="section-label"><img src="../assets/icons/globe.svg" alt="" class="icon" style="color: var(--clr-primary);"> Impact</div>
+            <h1>Your Environmental <span>Footprint</span></h1>
+            <p style="color:var(--clr-text-secondary);margin-top:8px;">Understand your real-world environmental impact
+                in tangible terms</p>
+        </div>
+
+        <div class="section" style="padding-top:0;">
+            <div class="imp-loading" id="impLoading">
+                <div class="spinner"></div>
+                <p>Calculating impact…</p>
+            </div>
+
+            <div class="hidden" id="impNoData">
+                <div style="text-align:center;padding:60px 20px;">
+                    <div style="font-size:3.5rem;margin-bottom:16px;"><img src="../assets/icons/globe.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+                    <h2>Complete a Survey First</h2>
+                    <p style="color:var(--clr-text-secondary);margin-bottom:24px;">We need your data to show your
+                        environmental impact.</p>
+                    <a href="survey.html" class="btn btn-primary">Take Survey</a>
+                </div>
+            </div>
+
+            <div class="hidden" id="impContent">
+                <!-- Hero Impact Score -->
+                <div class="imp-hero glass-card fade-up" id="impHero"></div>
+
+                <!-- Equivalent Cards (tangible impact) -->
+                <div class="section-label" style="margin-bottom:16px;"><img src="../assets/icons/chart.svg" alt="" class="icon" style="color: var(--clr-primary);"> What Does This Mean?</div>
+                <div class="equiv-grid fade-up" id="equivGrid"></div>
+
+                <!-- Annual Projection -->
+                <div class="annual-card glass-card fade-up" id="annualCard"></div>
+
+                <!-- Global Context -->
+                <div class="context-section fade-up">
+                    <div class="section-label" style="margin-bottom:16px;"><img src="../assets/icons/globe.svg" alt="" class="icon" style="color: var(--clr-primary);"> Global Context</div>
+                    <div class="context-grid">
+                        <div class="ctx-card glass-card">
+                            <h3><img src="../assets/icons/building.svg" alt="" class="icon" style="margin-right: 4px; color: var(--clr-primary);"> India Average</h3>
+                            <div class="ctx-num">~100</div>
+                            <div class="ctx-unit">kg CO₂ / person / month</div>
+                            <p>National per-capita baseline</p>
+                        </div>
+                        <div class="ctx-card glass-card">
+                            <h3><img src="../assets/icons/globe.svg" alt="" class="icon" style="margin-right: 4px; color: var(--clr-primary);"> Global Average</h3>
+                            <div class="ctx-num">~360</div>
+                            <div class="ctx-unit">kg CO₂ / person / month</div>
+                            <p>World per-capita average (2023)</p>
+                        </div>
+                        <div class="ctx-card glass-card">
+                            <h3><img src="../assets/icons/target.svg" alt="" class="icon" style="margin-right: 4px; color: var(--clr-primary);"> Paris Target</h3>
+                            <div class="ctx-num">~125</div>
+                            <div class="ctx-unit">kg CO₂ / person / month</div>
+                            <p>1.5°C pathway target by 2030</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Commitment Widget -->
+                <div class="commit-card glass-card fade-up">
+                    <div class="commit-icon"><img src="../assets/icons/sprout.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
+                    <h2>Take the Green Pledge</h2>
+                    <p>Commit to reducing your footprint by 10% next month</p>
+                    <button class="btn btn-primary btn-lg" id="pledgeBtn" onclick="takePledge()">
+                        🤝 I Pledge to Reduce by 10%
+                    </button>
+                    <div class="pledge-msg hidden" id="pledgeMsg">
+                        <span><img src="../assets/icons/check.svg" alt="" class="icon" style="margin-right: 4px;"></span> Pledge saved! Check your AI suggestions for actionable steps.
+                    </div>
+                </div>
+
+                <div class="dash-cta fade-up" style="margin-top:32px;">
+                    <a href="suggestions.html" class="btn btn-primary">🤖 Get AI Tips</a>
+                    <a href="dashboard.html" class="btn btn-outline">📊 Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 CarbonTrack</p>
+    </footer>
+    <div class="toast-container"></div>
+    <script type="module" src="../js/nav.js"></script>
+    <script type="module" src="../js/impact.js"></script>
+</body>
+
+</html>
