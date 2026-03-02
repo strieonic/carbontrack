@@ -266,10 +266,14 @@ async function loadSuggestions() {
 
     try {
         const latest = await fetchLatest();
+        
         if (loading) loading.style.display = 'none';
 
         if (!latest) {
-            if (noData) noData.classList.remove('hidden');
+            if (noData) {
+                noData.classList.remove('hidden');
+                noData.style.display = 'block';
+            }
             return;
         }
 
@@ -321,17 +325,28 @@ async function loadSuggestions() {
 
         // Render grid
         const grid = document.getElementById('sugGrid');
-        if (grid) grid.innerHTML = allSuggestions.map(renderSugCard).join('');
+        if (grid) {
+            grid.innerHTML = allSuggestions.map(renderSugCard).join('');
+        }
         
         if (aiCount > 0) {
-            showToast(`✨ ${aiCount} AI suggestions generated!`, 'success');
+            showToast(`✨ ${aiCount} personalized suggestions ready!`, 'success');
+        } else {
+            showToast(`📋 ${ruleSuggestions.length} suggestions loaded`, 'success');
         }
 
     } catch (err) {
-        console.error(err);
+        console.error('Load suggestions error:', err);
         if (loading) loading.style.display = 'none';
-        if (noData) noData.classList.remove('hidden');
-        showToast('Failed to load suggestions', 'error');
+        if (noData) {
+            noData.classList.remove('hidden');
+            noData.style.display = 'block';
+        }
+        if (content) {
+            content.classList.add('hidden');
+            content.style.display = 'none';
+        }
+        showToast('Error loading suggestions: ' + err.message, 'error');
     }
 }
 
