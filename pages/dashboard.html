@@ -17,7 +17,7 @@
 
     <nav class="navbar">
         <a href="../index.html" class="nav-logo">
-            <div class="logo-icon"><img src="../assets/icons/leaf.svg" alt="CarbonTrack" class="icon icon-md" style="color: var(--clr-primary-bright);"></div>
+            <div class="logo-icon"><img src="../assets/icons/leaf.svg" alt="CarbonTrack" class="icon icon-md" style="color: var(--clr-primary);"></div>
             <span>CarbonTrack</span>
         </a>
         <ul class="nav-links" id="navLinks">
@@ -42,11 +42,11 @@
         <!-- No Data State -->
         <div class="dash-empty hidden" id="dashEmpty">
             <div class="page-header">
-                <div class="section-label"><img src="../assets/icons/chart.svg" alt="" class="icon" style="color: var(--clr-primary-bright);"> Dashboard</div>
+                <div class="section-label"><img src="../assets/icons/chart.svg" alt="" class="icon" style="color: var(--clr-primary);"> Dashboard</div>
                 <h1>No Data <span>Yet</span></h1>
             </div>
             <div class="empty-state">
-                <div class="empty-icon"><img src="../assets/icons/sprout.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary-bright);"></div>
+                <div class="empty-icon"><img src="../assets/icons/sprout.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
                 <h2>Start Your First Assessment</h2>
                 <p>Complete the survey to see your carbon footprint dashboard with charts and insights.</p>
                 <a href="survey.html" class="btn btn-primary btn-lg" style="margin-top:24px;"><img src="../assets/icons/document.svg" alt="" class="icon" style="margin-right: 8px;"> Take Survey Now</a>
@@ -58,7 +58,7 @@
             <div class="page-header">
                 <div class="dash-header-row">
                     <div>
-                        <div class="section-label"><img src="../assets/icons/chart.svg" alt="" class="icon" style="color: var(--clr-primary-bright);"> Your Dashboard</div>
+                        <div class="section-label"><img src="../assets/icons/chart.svg" alt="" class="icon" style="color: var(--clr-primary);"> Your Dashboard</div>
                         <h1>Carbon Footprint <span>Overview</span></h1>
                         <p id="dashDate" class="dash-date">Last updated: —</p>
                     </div>
@@ -73,23 +73,23 @@
                 <!-- KPI CARDS -->
                 <div class="kpi-grid fade-up">
                     <div class="stat-card">
-                        <div class="stat-icon"><img src="../assets/icons/leaf.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary-bright);"></div>
+                        <div class="stat-icon"><img src="../assets/icons/leaf.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
                         <div class="stat-value" id="kpiTotal">—</div>
                         <div class="stat-label">Total CO₂ (kg/month)</div>
                         <div class="stat-change" id="kpiTotalChange"></div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon"><img src="../assets/icons/lightning.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary-bright);"></div>
+                        <div class="stat-icon"><img src="../assets/icons/lightning.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
                         <div class="stat-value" id="kpiEnergy">—</div>
                         <div class="stat-label">Energy Used (kWh)</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon"><img src="../assets/icons/person.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary-bright);"></div>
+                        <div class="stat-icon"><img src="../assets/icons/person.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
                         <div class="stat-value" id="kpiPer">—</div>
                         <div class="stat-label">Per Person CO₂ (kg)</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon"><img src="../assets/icons/tree.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary-bright);"></div>
+                        <div class="stat-icon"><img src="../assets/icons/tree.svg" alt="" class="icon icon-2xl" style="color: var(--clr-primary);"></div>
                         <div class="stat-value" id="kpiTrees">—</div>
                         <div class="stat-label">Trees Needed to Offset</div>
                     </div>
@@ -104,20 +104,20 @@
                 <!-- CHARTS ROW -->
                 <div class="charts-row fade-up">
                     <div class="chart-wrapper">
-                        <h3><img src="../assets/icons/pie-chart.svg" alt="Pie Chart" class="icon" style="margin-right: 8px; color: var(--clr-primary-bright);"> Emission Sources</h3>
+                        <h3>🥧 Emission Sources</h3>
                         <div class="chart-canvas-wrap">
                             <canvas id="pieChart"></canvas>
                         </div>
                     </div>
                     <div class="chart-wrapper">
-                        <h3><img src="../assets/icons/trend.svg" alt="Trend" class="icon" style="margin-right: 8px; color: var(--clr-primary-bright);"> Monthly Trend</h3>
+                        <h3>📈 Monthly Trend</h3>
                         <canvas id="lineChart"></canvas>
                     </div>
                 </div>
 
                 <!-- BAR CHART – PREVIOUS VS CURRENT -->
                 <div class="chart-wrapper fade-up" style="margin-top:24px;">
-                    <h3><img src="../assets/icons/comparison.svg" alt="Comparison" class="icon" style="margin-right: 8px; color: var(--clr-primary-bright);"> Previous vs Current Comparison</h3>
+                    <h3>🔄 Previous vs Current Comparison</h3>
                     <canvas id="barChart" style="max-height:280px;"></canvas>
                     <div class="bar-na hidden" id="barNA">
                         <p>Complete a second survey to see comparison data.</p>
@@ -126,15 +126,15 @@
 
                 <!-- CITY INFO -->
                 <div class="city-card glass-card fade-up" style="padding:28px;margin-top:24px;">
-                    <h3><img src="../assets/icons/location.svg" alt="Location" class="icon" style="margin-right: 8px; color: var(--clr-primary-bright);"> Your Assessment Details</h3>
+                    <h3>📍 Your Assessment Details</h3>
                     <div class="city-grid" id="cityGrid"></div>
                 </div>
 
                 <!-- CTA -->
                 <div class="dash-cta fade-up">
-                    <a href="suggestions.html" class="btn btn-primary"><img src="../assets/icons/robot.svg" alt="" class="icon" style="margin-right: 8px;"> Get AI Suggestions</a>
-                    <a href="comparison.html" class="btn btn-outline"><img src="../assets/icons/comparison.svg" alt="" class="icon" style="margin-right: 8px;"> View Comparison</a>
-                    <a href="survey.html" class="btn btn-ghost"><img src="../assets/icons/document.svg" alt="" class="icon" style="margin-right: 8px;"> New Survey</a>
+                    <a href="suggestions.html" class="btn btn-primary">🤖 Get AI Suggestions</a>
+                    <a href="comparison.html" class="btn btn-outline">🔄 View Comparison</a>
+                    <a href="survey.html" class="btn btn-ghost">📝 New Survey</a>
                 </div>
             </div>
         </div>
