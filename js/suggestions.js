@@ -238,7 +238,7 @@ window.filterSuggestions = function (filter) {
 };
 
 function renderSugCard(sug) {
-    const isAI = sug.id?.startsWith('ai_');
+    const isAI = String(sug.id || '').startsWith('ai_');
     return `
     <div class="sug-card glass-card fade-up" data-impact="${sug.impact}">
       <div class="sug-top">
